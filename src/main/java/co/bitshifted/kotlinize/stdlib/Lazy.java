@@ -1,59 +1,65 @@
+/*
+ * Copyright © 2025, Bitshift D.O.O <https://bitshifted.co>
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 package co.bitshifted.kotlinize.stdlib;
 
 import java.util.function.Supplier;
 
 /**
- * A simple thread-safe lazy holder. The initializer will be executed at most once
- * (unless the initializer throws), and the computed value will be returned on
- * subsequent calls to {@link #value()}.
+ * A simple thread-safe lazy holder. The initializer will be executed at most once (unless the
+ * initializer throws), and the computed value will be returned on subsequent calls to {@link
+ * #value()}.
  *
- * This implementation uses double-checked locking with volatile fields to avoid
- * unnecessary synchronization after initialization.
+ * <p>This implementation uses double-checked locking with volatile fields to avoid unnecessary
+ * synchronization after initialization.
  *
- * Note: if the {@code initializer} throws an exception, the exception is
- * propagated and the instance remains uninitialized — subsequent calls will
- * attempt initialization again.
+ * <p>Note: if the {@code initializer} throws an exception, the exception is propagated and the
+ * instance remains uninitialized — subsequent calls will attempt initialization again.
  *
  * @param <T> the value type
  */
 public final class Lazy<T> {
-    private volatile T value;
-    private volatile boolean initialized = false;
-    private final Supplier<T> initializer;
-    private final Object lock = new Object();
+  private volatile T value;
+  private volatile boolean initialized = false;
+  private final Supplier<T> initializer;
+  private final Object lock = new Object();
 
-    public Lazy(Supplier<T> initializer) {
-        if (initializer == null) {
-            throw new NullPointerException("initializer must not be null");
-        }
-        this.initializer = initializer;
+  public Lazy(Supplier<T> initializer) {
+    if (initializer == null) {
+      throw new NullPointerException("initializer must not be null");
     }
+    this.initializer = initializer;
+  }
 
-    /**
-     * Returns the lazily-initialized value. If not yet initialized, the
-     * {@code initializer} is invoked. This method is thread-safe.
-     *
-     * @return the initialized value (may be null if initializer returns null)
-     */
-    public T value() {
+  /**
+   * Returns the lazily-initialized value. If not yet initialized, the {@code initializer} is
+   * invoked. This method is thread-safe.
+   *
+   * @return the initialized value (may be null if initializer returns null)
+   */
+  public T value() {
+    if (!initialized) {
+      synchronized (lock) {
         if (!initialized) {
-            synchronized (lock) {
-                if (!initialized) {
-                    T computed = initializer.get();
-                    value = computed;
-                    // Make write to value visible before setting initialized
-                    initialized = true;
-                }
-            }
+          T computed = initializer.get();
+          value = computed;
+          // Make write to value visible before setting initialized
+          initialized = true;
         }
-        return value;
+      }
     }
+    return value;
+  }
 
-    /**
-     * Returns true if the value has already been initialized.
-     * This reads a volatile field so it is thread-safe.
-     */
-    public boolean isInitialized() {
-        return initialized;
-    }
+  /**
+   * Returns true if the value has already been initialized. This reads a volatile field so it is
+   * thread-safe.
+   */
+  public boolean isInitialized() {
+    return initialized;
+  }
 }

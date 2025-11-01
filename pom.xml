@@ -263,7 +263,7 @@
                     <version>${license-maven-plugin.version}</version>
                     <configuration>
                         <properties>
-                            <year>2024-2025</year>
+                            <year>2025</year>
                             <owner>Bitshift D.O.O</owner>
                             <email>https://bitshifted.co</email>
                         </properties>
@@ -311,6 +311,10 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
