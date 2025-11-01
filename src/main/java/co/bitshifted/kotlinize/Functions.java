@@ -208,6 +208,16 @@ public final class Functions {
     }
 
     /**
+     * Throws an IllegalStateException with the provided message.
+     *
+     * @param message the message for the exception
+     * @throws IllegalStateException always thrown with the provided message
+     */
+    public static void error(String message) {
+        throw new IllegalStateException(message);
+    }
+
+    /**
      * Creates a lazy-initialized value using the provided initializer function.
      *
      * @param initializer the function to initialize the value
