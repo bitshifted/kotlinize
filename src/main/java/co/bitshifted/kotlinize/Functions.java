@@ -10,8 +10,13 @@ import java.util.function.Supplier;
  * A utility class that provides implementations of Kotlin standard library functions in Java. Provided functions include:
  *
  * <ul>
- *     <li>arrayOf: Creates an array from the given elements.</li>
+ *     <li>arrayOf: Creates an array from the given elements, including per-type variants</li>
+ *     <li>lazy: create lazy initialized instance</li>
+ *     <li>repeat: Repeats a block of code a specified number of times</li>
+ *     <li>require: Checks a condition and throws IllegalArgumentException if false</li>
+ *     <li>requireNonNull: Ensures an object is not null, throwing IllegalArgumentException if it is</li>
  *     <li>runCatching: Executes a block of code and captures any thrown exceptions</li>
+ *     <li>TODOfunction - throws UnsupportedOperationException - </li>
  * </ul>
  */
 public final class Functions {
@@ -250,34 +255,6 @@ public final class Functions {
     }
 
     /**
-     * Ensures that the provided object is not null.
-     *
-     * @param obj the object to check for nullity
-     * @param <T> the type of the object
-     * @return the non-null object
-     * @throws IllegalArgumentException if the object is null
-     */
-    public static <T> T requireNonNull(T obj) {
-        return requireNonNull(obj, "Object must not be null");
-    }
-
-    /**
-     * Ensures that the provided object is not null.
-     *
-     * @param obj the object to check for nullity
-     * @param message the message for the exception if the object is null
-     * @param <T> the type of the object
-     * @return the non-null object
-     * @throws IllegalArgumentException if the object is null
-     */
-    public static <T> T requireNonNull(T obj, String message) {
-        if(obj == null) {
-            throw new IllegalArgumentException(message);
-        }
-        return obj;
-    }
-
-    /**
      * Ensures the provided value is not null and returns it; throws IllegalArgumentException with the
      * provided message if it is null.
      *
@@ -307,14 +284,6 @@ public final class Functions {
         return requireNotNull(value, "Required value was null");
     }
 
-    /**
-     * Placeholder method indicating that the functionality is not yet implemented.
-     *
-     * @throws UnsupportedOperationException always thrown to indicate unimplemented functionality
-     */
-    public static void TODO() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
 
     /**
      * Executes the given block of code and returns a {@code Result} representing either the successful result
@@ -330,6 +299,15 @@ public final class Functions {
         } catch(Throwable th) {
             return new Result<>(th);
         }
+    }
+
+    /**
+     * Placeholder method indicating that the functionality is not yet implemented.
+     *
+     * @throws UnsupportedOperationException always thrown to indicate unimplemented functionality
+     */
+    public static void TODO() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
 }

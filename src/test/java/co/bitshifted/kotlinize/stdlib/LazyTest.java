@@ -22,13 +22,13 @@ public class LazyTest {
         Lazy<Integer> lazy = new Lazy<>(counter::incrementAndGet);
 
         assertFalse(lazy.isInitialized());
-        int first = lazy.getValue();
+        int first = lazy.value();
         assertTrue(lazy.isInitialized());
         assertEquals(1, first);
         assertEquals(1, counter.get());
 
         // subsequent calls should not invoke the initializer again
-        int second = lazy.getValue();
+        int second = lazy.value();
         assertEquals(first, second);
         assertEquals(1, counter.get());
     }
@@ -45,11 +45,11 @@ public class LazyTest {
         });
 
         // first attempt fails and should leave the instance uninitialized
-        assertThrows(RuntimeException.class, lazy::getValue);
+        assertThrows(RuntimeException.class, lazy::value);
         assertFalse(lazy.isInitialized());
 
         // second attempt succeeds
-        String v = lazy.getValue();
+        String v = lazy.value();
         assertEquals("ok", v);
         assertTrue(lazy.isInitialized());
         assertEquals(2, attempts.get());
@@ -59,7 +59,7 @@ public class LazyTest {
     void initializerReturningNullIsAllowed() {
         Lazy<String> lazy = new Lazy<>(() -> null);
         assertFalse(lazy.isInitialized());
-        assertNull(lazy.getValue());
+        assertNull(lazy.value());
         assertTrue(lazy.isInitialized());
     }
 
@@ -81,7 +81,7 @@ public class LazyTest {
         try {
             List<Future<Integer>> futures = new ArrayList<>();
             for (int i = 0; i < threads; i++) {
-                futures.add(exec.submit(lazy::getValue));
+                futures.add(exec.submit(lazy::value));
             }
 
             // wait for results

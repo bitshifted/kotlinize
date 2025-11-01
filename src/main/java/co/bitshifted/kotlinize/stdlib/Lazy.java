@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 /**
  * A simple thread-safe lazy holder. The initializer will be executed at most once
  * (unless the initializer throws), and the computed value will be returned on
- * subsequent calls to {@link #getValue()}.
+ * subsequent calls to {@link #value()}.
  *
  * This implementation uses double-checked locking with volatile fields to avoid
  * unnecessary synchronization after initialization.
@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  *
  * @param <T> the value type
  */
-public class Lazy<T> {
+public final class Lazy<T> {
     private volatile T value;
     private volatile boolean initialized = false;
     private final Supplier<T> initializer;
@@ -35,7 +35,7 @@ public class Lazy<T> {
      *
      * @return the initialized value (may be null if initializer returns null)
      */
-    public T getValue() {
+    public T value() {
         if (!initialized) {
             synchronized (lock) {
                 if (!initialized) {

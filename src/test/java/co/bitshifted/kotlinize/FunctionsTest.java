@@ -182,13 +182,13 @@ public class FunctionsTest {
         AtomicInteger counter = new java.util.concurrent.atomic.AtomicInteger(0);
         var l = lazy(counter::incrementAndGet);
         assertFalse(l.isInitialized());
-        int v = l.getValue();
+        int v = l.value();
         assertEquals(1, v);
         assertTrue(l.isInitialized());
         assertEquals(1, counter.get());
 
         // subsequent calls do not increment
-        assertEquals(1, l.getValue());
+        assertEquals(1, l.value());
         assertEquals(1, counter.get());
     }
 
@@ -209,11 +209,11 @@ public class FunctionsTest {
         });
 
         // first attempt should throw and leave the Lazy uninitialized
-        assertThrows(RuntimeException.class, l::getValue);
+        assertThrows(RuntimeException.class, l::value);
         assertFalse(l.isInitialized());
 
         // second attempt should succeed
-        String v = l.getValue();
+        String v = l.value();
         assertEquals("ok", v);
         assertTrue(l.isInitialized());
         assertEquals(2, attempts.get());
