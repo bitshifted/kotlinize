@@ -92,4 +92,54 @@ public class NullAwareTest {
         assertEquals("Hello, World!", result.toString());
     }
 
+    @Test
+    void takeIfReturnsSelfWhenPredicateTrue() {
+        var na = nullAware(() -> person.homeAddress().city().name());
+        var taken = na.takeIf(name -> name.startsWith("S"));
+        // when predicate matches and value is non-null, takeIf should return the same instance
+        assertSame(na, taken);
+        assertEquals("Springfield", taken.value());
+    }
+
+    @Test
+    void takeIfReturnsNullAwareWhenPredicateFalse() {
+        var na = nullAware(() -> person.homeAddress().city().name());
+        var taken = na.takeIf(name -> name.startsWith("X"));
+        // predicate does not match -> should return a NullAware with null value
+        assertNotSame(na, taken);
+        assertNull(taken.value());
+    }
+
+    @Test
+    void takeIfOnNullValueReturnsNullAwareWithNull() {
+        var na = nullAware(() -> person.homeAddress().city().zipCode()); // zipCode is null
+        var taken = na.takeIf(x -> true);
+        assertNotSame(na, taken);
+        assertNull(taken.value());
+    }
+
+    @Test
+    void takeUnlessReturnsSelfWhenPredicateFalse() {
+        var na = nullAware(() -> person.homeAddress().city().name());
+        var taken = na.takeUnless(name -> name.startsWith("X")); // predicate false
+        assertSame(na, taken);
+        assertEquals("Springfield", taken.value());
+    }
+
+    @Test
+    void takeUnlessReturnsNullAwareWhenPredicateTrue() {
+        var na = nullAware(() -> person.homeAddress().city().name());
+        var taken = na.takeUnless(name -> name.startsWith("S")); // predicate true
+        assertNotSame(na, taken);
+        assertNull(taken.value());
+    }
+
+    @Test
+    void takeUnlessOnNullValueReturnsNullAwareWithNull() {
+        var na = nullAware(() -> person.homeAddress().city().zipCode()); // zipCode is null
+        var taken = na.takeUnless(x -> false);
+        assertNotSame(na, taken);
+        assertNull(taken.value());
+    }
+
 }

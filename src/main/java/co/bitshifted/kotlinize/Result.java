@@ -1,5 +1,6 @@
 package co.bitshifted.kotlinize;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -51,6 +52,87 @@ public final class Result<T> {
             return null;
         }
         return value;
+    }
+
+    /**
+     * Returns the value if the result is successful, or the provided default value if it is a failure.
+     *
+     * @param defaultValue the default value to return if the result is a failure
+     * @return the result value or the default value
+     */
+    public T getOrDefault(T defaultValue) {
+        if(!success) {
+            return defaultValue;
+        }
+        return value;
+    }
+
+    /**
+     * Returns the value if the result is successful, or the result of the provided function
+     * if it is a failure.
+     *
+     * @param onFailure function to compute the value if the result is a failure
+     * @return the result value or the computed value from the function
+     */
+    public T getOrElse(Function<Throwable, T> onFailure) {
+        if(!success) {
+            return onFailure.apply(exception);
+        }
+        return value;
+    }
+
+    /**
+     * Returns the value if the result is successful, or throws the exception if it is a failure.
+     *
+     * @return the result value
+     * @throws Throwable the exception if the result is a failure
+     */
+    public T getOrThrow() throws Throwable {
+        if(!success) {
+            throw exception;
+        }
+        return value;
+    }
+
+    /**
+     * Transforms the successful result value using the provided function,
+     * or propagates the failure if the result is a failure.
+     *
+     * @param transform function to transform the successful result value
+     * @return a new Result containing the transformed value or the original exception
+     * @param <R> the type of the transformed result value
+     */
+    public <R> Result<R> map(Function<T,R> transform) {
+        if(success) {
+            return new Result<>(transform.apply(value));
+        } else {
+            return new Result<>(exception);
+        }
+    }
+
+    /**
+     * Executes the provided action if the result is successful. Returns the original {@code Result} unchanged.
+     *
+     * @param action action to execute with the successful result value
+     * @return the original Result
+     */
+    public Result<T> onFailure(Consumer<Throwable> action) {
+        if(!success) {
+            action.accept(exception);
+        }
+        return this;
+    }
+
+    /**
+     * Executes the provided action if the result is successful. Returns the original {@code Result} unchanged.
+     * @param action action to execute with the successful result value
+     * @return the original Result
+     */
+    public Result<T> onSuccess(Consumer<T> action) {
+        if(success) {
+            action.accept(value);
+        }
+        return this;
     }
 
     /**

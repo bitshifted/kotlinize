@@ -115,6 +115,66 @@ public class FunctionsTest {
         assertArrayEquals(new Double[]{1.0, null, -3.0}, arr);
     }
 
+    @Test
+    void repeatExecutesBlockSpecifiedTimes() {
+        final int[] count = new int[1];
+        repeat(4, () -> count[0]++);
+        assertEquals(4, count[0]);
+    }
+
+    @Test
+    void repeatDoesNothingForZeroOrNegative() {
+        final int[] count = new int[1];
+        repeat(0, () -> count[0]++);
+        repeat(-3, () -> count[0]++);
+        assertEquals(0, count[0]);
+    }
+
+    @Test
+    void requireDoesNotThrowWhenConditionTrue() {
+        // both overloads should not throw when condition is true
+        require(true);
+        require(true, "ok");
+    }
+
+    @Test
+    void requireThrowsOnFalseWithDefaultMessage() {
+        var ex = assertThrows(IllegalArgumentException.class, () -> require(false));
+        assertEquals("Requirement failed", ex.getMessage());
+    }
+
+    @Test
+    void requireWithMessageThrowsProvidedMessage() {
+        var ex = assertThrows(IllegalArgumentException.class, () -> require(false, "custom message"));
+        assertEquals("custom message", ex.getMessage());
+    }
+
+    @Test
+    void requireNotNullDoesNotThrowWhenValueNonNull() {
+        String v = requireNotNull("hello");
+        assertEquals("hello", v);
+        Integer i = requireNotNull(Integer.valueOf(5), "msg");
+        assertEquals(Integer.valueOf(5), i);
+    }
+
+    @Test
+    void requireNotNullThrowsWithDefaultMessageWhenNull() {
+        var ex = assertThrows(IllegalArgumentException.class, () -> requireNotNull(null));
+        assertEquals("Required value was null", ex.getMessage());
+    }
+
+    @Test
+    void requireNotNullThrowsWithProvidedMessageWhenNull() {
+        var ex = assertThrows(IllegalArgumentException.class, () -> requireNotNull(null, "custom not-null message"));
+        assertEquals("custom not-null message", ex.getMessage());
+    }
+
+    @Test
+    void todoThrowsUnsupportedOperationException() {
+        var ex = assertThrows(UnsupportedOperationException.class, () -> TODO());
+        assertEquals("Not implemented yet", ex.getMessage());
+    }
+
 
     private int increment(int x) {
         if(x < 0) {

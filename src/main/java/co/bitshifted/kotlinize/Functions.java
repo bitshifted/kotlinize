@@ -1,6 +1,7 @@
 package co.bitshifted.kotlinize;
 
 import java.lang.reflect.Array;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -197,6 +198,109 @@ public final class Functions {
      */
     public static Double[] boxedDoubleArrayOf(Double... members) {
         return members;
+    }
+
+    /**
+     * Repeats the given block of code a specified number of times.
+     *
+     * @param times the number of times to repeat the block
+     * @param block the block of code to execute
+     */
+    public static void repeat(int times, Runnable block) {
+        for(int i = 0; i < times; i++) {
+            block.run();
+        }
+    }
+
+    /**
+     * Checks the given condition and throws an {@code IllegalArgumentException} if the condition is false.
+     *
+     * @param condition the condition to check
+     * @throws IllegalArgumentException if the condition is false
+     */
+    public static void require(boolean condition) {
+        require(condition, "Requirement failed");
+    }
+
+    /**
+     * Checks the given condition and throws an {@code IllegalArgumentException} with the provided message
+     * if the condition is false.
+     *
+     * @param condition the condition to check
+     * @param message the message for the exception if the condition is false
+     * @throws IllegalArgumentException if the condition is false
+     */
+    public static void require(boolean condition, String message) {
+        if(!condition) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    /**
+     * Ensures that the provided object is not null.
+     *
+     * @param obj the object to check for nullity
+     * @param <T> the type of the object
+     * @return the non-null object
+     * @throws IllegalArgumentException if the object is null
+     */
+    public static <T> T requireNonNull(T obj) {
+        return requireNonNull(obj, "Object must not be null");
+    }
+
+    /**
+     * Ensures that the provided object is not null.
+     *
+     * @param obj the object to check for nullity
+     * @param message the message for the exception if the object is null
+     * @param <T> the type of the object
+     * @return the non-null object
+     * @throws IllegalArgumentException if the object is null
+     */
+    public static <T> T requireNonNull(T obj, String message) {
+        if(obj == null) {
+            throw new IllegalArgumentException(message);
+        }
+        return obj;
+    }
+
+    /**
+     * Ensures the provided value is not null and returns it; throws IllegalArgumentException with the
+     * provided message if it is null.
+     *
+     * @param value value to check for null
+     * @param message exception message if null
+     * @param <T> type of the value
+     * @return the non-null value
+     * @throws IllegalArgumentException if value is null
+     */
+    public static <T> T requireNotNull(T value, String message) {
+        if(value == null) {
+            throw new IllegalArgumentException(message);
+        }
+        return value;
+    }
+
+    /**
+     * Ensures the provided value is not null and returns it; throws IllegalArgumentException with a default
+     * message if it is null.
+     *
+     * @param value value to check for null
+     * @param <T> type of the value
+     * @return the non-null value
+     * @throws IllegalArgumentException if value is null
+     */
+    public static <T> T requireNotNull(T value) {
+        return requireNotNull(value, "Required value was null");
+    }
+
+    /**
+     * Placeholder method indicating that the functionality is not yet implemented.
+     *
+     * @throws UnsupportedOperationException always thrown to indicate unimplemented functionality
+     */
+    public static void TODO() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /**

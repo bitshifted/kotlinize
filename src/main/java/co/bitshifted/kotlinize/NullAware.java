@@ -2,6 +2,7 @@ package co.bitshifted.kotlinize;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -70,6 +71,36 @@ public final class NullAware<T> {
             return block.get();
         }
         return value;
+    }
+
+    /**
+     * Replicates Kotlin's {@code takeIf} functionality. If the underlying value is not null and
+     * the provided predicate returns true, returns this {@code NullAware} instance. Otherwise,
+     * returns a new {@code NullAware} instance with a null value.
+     *
+     * @param block predicate to test the underlying value
+     * @return this NullAware instance if value is not null and predicate is true, otherwise a NullAware with null value
+     */
+    public NullAware<T> takeIf(Predicate<T> block) {
+        if(value != null && block.test(value)) {
+            return this;
+        }
+        return new NullAware<>(null);
+    }
+
+    /**
+     * Replicates Kotlin's {@code takeUnless} functionality. If the underlying value is not null and
+     * the provided predicate returns false, returns this {@code NullAware} instance. Otherwise,
+     * returns a new {@code NullAware} instance with a null value.
+     *
+     * @param block predicate to test the underlying value
+     * @return this NullAware instance if value is not null and predicate is false, otherwise a NullAware with null value
+     */
+    public NullAware<T> takeUnless(Predicate<T> block) {
+        if(value != null && !block.test(value)) {
+            return this;
+        }
+        return new NullAware<>(null);
     }
 
     /**
