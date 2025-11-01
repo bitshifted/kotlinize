@@ -1,5 +1,6 @@
 package co.bitshifted.kotlinize;
 
+import co.bitshifted.kotlinize.stdlib.Lazy;
 import co.bitshifted.kotlinize.stdlib.Result;
 
 import java.lang.reflect.Array;
@@ -199,6 +200,17 @@ public final class Functions {
      */
     public static Double[] boxedDoubleArrayOf(Double... members) {
         return members;
+    }
+
+    /**
+     * Creates a lazy-initialized value using the provided initializer function.
+     *
+     * @param initializer the function to initialize the value
+     * @param <T> the type of the value
+     * @return a Lazy instance that initializes the value when first accessed
+     */
+    public static <T> Lazy<T> lazy(Supplier<T> initializer) {
+        return new Lazy<>(initializer);
     }
 
     /**

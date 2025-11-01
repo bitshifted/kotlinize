@@ -2,6 +2,8 @@ package co.bitshifted.kotlinize;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static co.bitshifted.kotlinize.Functions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -173,6 +175,48 @@ public class FunctionsTest {
     void todoThrowsUnsupportedOperationException() {
         var ex = assertThrows(UnsupportedOperationException.class, () -> TODO());
         assertEquals("Not implemented yet", ex.getMessage());
+    }
+
+    @Test
+    void lazyCreatesLazyAndInitializesOnDemand() {
+        AtomicInteger counter = new java.util.concurrent.atomic.AtomicInteger(0);
+        var l = lazy(counter::incrementAndGet);
+        assertFalse(l.isInitialized());
+        int v = l.getValue();
+        assertEquals(1, v);
+        assertTrue(l.isInitialized());
+        assertEquals(1, counter.get());
+
+        // subsequent calls do not increment
+        assertEquals(1, l.getValue());
+        assertEquals(1, counter.get());
+    }
+
+    @Test
+    void lazyWithNullInitializerThrows() {
+        assertThrows(NullPointerException.class, () -> lazy(null));
+    }
+
+    @Test
+    void lazyInitializerThrowsThenSucceeds() {
+        AtomicInteger attempts = new AtomicInteger(0);
+        var l = lazy(() -> {
+            int a = attempts.incrementAndGet();
+            if (a == 1) {
+                throw new RuntimeException("boom");
+            }
+            return "ok";
+        });
+
+        // first attempt should throw and leave the Lazy uninitialized
+        assertThrows(RuntimeException.class, l::getValue);
+        assertFalse(l.isInitialized());
+
+        // second attempt should succeed
+        String v = l.getValue();
+        assertEquals("ok", v);
+        assertTrue(l.isInitialized());
+        assertEquals(2, attempts.get());
     }
 
 
