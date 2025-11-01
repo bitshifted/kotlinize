@@ -1,6 +1,6 @@
 package co.bitshifted.kotlinize;
 
-import org.junit.jupiter.api.Assertions;
+import co.bitshifted.kotlinize.stdlib.Result;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

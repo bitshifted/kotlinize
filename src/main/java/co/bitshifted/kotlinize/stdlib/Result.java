@@ -1,4 +1,4 @@
-package co.bitshifted.kotlinize;
+package co.bitshifted.kotlinize.stdlib;
 
 import java.util.function.Consumer;
 import java.util.function.Function;

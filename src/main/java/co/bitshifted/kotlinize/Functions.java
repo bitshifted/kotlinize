@@ -1,7 +1,8 @@
 package co.bitshifted.kotlinize;
 
+import co.bitshifted.kotlinize.stdlib.Result;
+
 import java.lang.reflect.Array;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
