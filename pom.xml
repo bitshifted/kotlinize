@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2020. Bitshift (http://bitshifted.co)
+  ~ Copyright (c) 2025. Bitshift (http://bitshifted.co)
   ~
   ~ This Source Code Form is subject to the terms of the Mozilla Public
   ~ License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -113,7 +113,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
-                        <useModulePath>false</useModulePath>  <!-- tests use classpath -->
+                        <useModulePath>false</useModulePath> <!-- To avoid issues with JUnit 5 -->
                     </configuration>
                 </plugin>
                 <plugin>
