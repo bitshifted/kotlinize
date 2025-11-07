@@ -1,5 +1,5 @@
 /*
- * Copyright © 2025, Bitshift D.O.O <https://bitshifted.co>
+ * Copyright © 2025, Bitshift <https://bitshifted.co>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
