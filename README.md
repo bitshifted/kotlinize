@@ -1,23 +1,45 @@
 Kotlinize
 =========
 
-Kotlinize is a small Java utility library that brings Kotlin-style helper functions and delegate primitives to Java projects.
+Kotlinize is a small Java utility library that brings Kotlin-style functionality to Java projects.
 
 Key features
-- Kotlin-like utilities: null-aware helpers, Result, Lazy, etc.
-- Delegate primitives: `Delegates.lazy`, `Delegates.usable`, `ObservableProperty`, `VetoableProperty`
-- Small, dependency-free, easy to drop into existing Java projects
+- Null-safe calls, functionality similar to Kotlin's `elvis`  (`?.`) operator
+- Implementations of Kotlin's standard library functions:
+- Implementation of Kotlin scope functions: `let`, `also`,  `with`
+- Delegate primitives: lazy, observable, vetoable
+- Simplified try-with-resources via `use` function
+- Implementation of Kotlin range functionality
 
-Build & test
-- Build the project and run tests with Maven:
-  mvn test
+## Installation
 
-Module
-- JPMS module: `co.bitshifted.kotlinize` (see `module-info.java`)
+For Maven projects, add dependency to your `pom.xml`:
 
-License
+```xml
+<dependency>
+    <groupId>co.bitshifted</groupId>
+    <artifactId>kotlinize</artifactId>
+    <version>latest version</version>
+</dependency>
+```
+For Gradle projects, add the following to your `build.gradle`:
+
+```groovy
+implementation 'co.bitshifted:kotlinize:latest version'
+```
+
+## Code samples and documentation
+
+* [Null-safe calls](/docs/null-safe.md)
+* [Scope functions](/docs/scope-functions.md)
+* [Standard library functions](/docs/stdlib-functions.md)
+* `use` function
+* Delegates
+* Ranges
+
+## License
 - This project is distributed under the Mozilla Public License 2.0 (MPL-2.0). See the `LICENSE` file for full text.
 
-Contributing
+## Contributing
 - Feel free to open issues or pull requests on the upstream repository.
 
