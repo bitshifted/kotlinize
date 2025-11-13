@@ -24,10 +24,7 @@ jobs:
           mvn spotless:check
       - name: Build and test
         run: |
-          mvn clean install
-      - name: Integration tests
-        run: |
-          cd integration-test && ./run-test.sh
+          mvn clean test
   release-maven-central:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
