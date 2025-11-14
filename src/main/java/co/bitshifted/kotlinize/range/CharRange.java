@@ -8,15 +8,15 @@
 package co.bitshifted.kotlinize.range;
 
 /**
- * A range of {@code char} values.
- * This class represents a sequence of characters from a start value to an end value (inclusive).
+ * A range of {@code char} values. This class represents a sequence of characters from a start value
+ * to an end value (inclusive).
  */
 public final class CharRange extends Range<Character> {
 
   /**
-   * Creates a new {@code CharRange} with a specified step.
-   * The range includes all values from {@code start} to {@code endInclusive}.
-   * If {@code start} is greater than {@code endInclusive}, the range will be decreasing.
+   * Creates a new {@code CharRange} with a specified step. The range includes all values from
+   * {@code start} to {@code endInclusive}. If {@code start} is greater than {@code endInclusive},
+   * the range will be decreasing.
    *
    * @param start the starting value of the range
    * @param endInclusive the ending value of the range (inclusive)
@@ -37,9 +37,9 @@ public final class CharRange extends Range<Character> {
   }
 
   /**
-   * Creates a new {@code CharRange} with a default step of 1.
-   * The range includes all values from {@code start} to {@code endInclusive}.
-   * If {@code start} is greater than {@code endInclusive}, the range will be decreasing.
+   * Creates a new {@code CharRange} with a default step of 1. The range includes all values from
+   * {@code start} to {@code endInclusive}. If {@code start} is greater than {@code endInclusive},
+   * the range will be decreasing.
    *
    * @param start the starting value of the range
    * @param endInclusive the ending value of the range (inclusive)

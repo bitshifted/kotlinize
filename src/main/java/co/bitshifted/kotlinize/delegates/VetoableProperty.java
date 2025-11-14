@@ -11,8 +11,8 @@ import co.bitshifted.kotlinize.Functions;
 import java.util.function.BiFunction;
 
 /**
- * A property that allows a callback to veto changes to its value.
- * This is similar to Kotlin's {@code vetoable} delegate.
+ * A property that allows a callback to veto changes to its value. This is similar to Kotlin's
+ * {@code vetoable} delegate.
  *
  * @param <T> the type of the property value
  * @see Delegates#vetoable(BiFunction)
@@ -27,9 +27,9 @@ public class VetoableProperty<T> {
    * Constructs a new {@code VetoableProperty} with an initial value and a callback.
    *
    * @param initialValue the initial value of the property
-   * @param callback a function that will be called before the property value is changed.
-   *                 It receives the old and new values and should return {@code true}
-   *                 to allow the change or {@code false} to veto it.
+   * @param callback a function that will be called before the property value is changed. It
+   *     receives the old and new values and should return {@code true} to allow the change or
+   *     {@code false} to veto it.
    * @throws IllegalStateException if the callback is {@code null}
    */
   public VetoableProperty(T initialValue, BiFunction<T, T, Boolean> callback) {
@@ -50,8 +50,8 @@ public class VetoableProperty<T> {
   }
 
   /**
-   * Sets a new value for the property if the change is not vetoed by the callback.
-   * The callback is invoked before the value is changed.
+   * Sets a new value for the property if the change is not vetoed by the callback. The callback is
+   * invoked before the value is changed.
    *
    * @param newValue the new value to set
    */

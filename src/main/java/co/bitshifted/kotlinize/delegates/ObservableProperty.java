@@ -11,8 +11,8 @@ import co.bitshifted.kotlinize.Functions;
 import java.util.function.BiFunction;
 
 /**
- * A property that notifies a callback function when its value has been changed.
- * This is similar to Kotlin's {@code observable} delegate.
+ * A property that notifies a callback function when its value has been changed. This is similar to
+ * Kotlin's {@code observable} delegate.
  *
  * @param <T> the type of the property value
  * @see Delegates#observable(BiFunction)
@@ -27,8 +27,8 @@ public class ObservableProperty<T> {
    * Constructs a new {@code ObservableProperty} with an initial value and a callback.
    *
    * @param initialValue the initial value of the property
-   * @param callback a function that will be called after the property value has been changed.
-   *                 It receives the old and new values.
+   * @param callback a function that will be called after the property value has been changed. It
+   *     receives the old and new values.
    * @throws IllegalStateException if the callback is {@code null}
    */
   public ObservableProperty(T initialValue, BiFunction<T, T, Void> callback) {
@@ -49,8 +49,8 @@ public class ObservableProperty<T> {
   }
 
   /**
-   * Sets a new value for the property and notifies the callback.
-   * The callback is invoked after the value has been updated.
+   * Sets a new value for the property and notifies the callback. The callback is invoked after the
+   * value has been updated.
    *
    * @param newValue the new value to set
    */

@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * A base class for ranges, representing a sequence of values.
- * This class is sealed and permits specific implementations for different data types.
+ * A base class for ranges, representing a sequence of values. This class is sealed and permits
+ * specific implementations for different data types.
  *
  * @param <T> the type of the range elements
  */
@@ -23,8 +23,10 @@ public sealed class Range<T> implements Iterable<T>
 
   /** The start value of the range. */
   protected final T start;
+
   /** The end value of the range (inclusive). */
   protected final T end;
+
   /** The step value for the range progression. */
   protected final T step;
 
