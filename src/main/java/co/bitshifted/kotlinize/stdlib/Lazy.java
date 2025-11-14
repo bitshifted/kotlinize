@@ -28,7 +28,11 @@ public final class Lazy<T> {
   private final Supplier<T> initializer;
   private final Object lock = new Object();
 
-  /** Creates a new {@code Lazy} instance. */
+  /**
+   * Creates a new {@code Lazy} instance.
+   *
+   * @param initializer supplier that provides value for initializer
+   */
   public Lazy(Supplier<T> initializer) {
     if (initializer == null) {
       throw new NullPointerException("initializer must not be null");

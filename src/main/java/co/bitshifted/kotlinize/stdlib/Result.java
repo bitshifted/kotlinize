@@ -44,12 +44,20 @@ public final class Result<T> {
     this.success = false;
   }
 
-  /** Returns true if the result is successful, false if it is a failure. */
+  /**
+   * Returns true if the result is successful, false if it is a failure.
+   *
+   * @return {@code true} if result is successfull, {@code false} otherwise
+   */
   public boolean isSuccess() {
     return success;
   }
 
-  /** Returns the value if the result is successful, or null if it is a failure. */
+  /**
+   * Returns the value if the result is successful, or null if it is a failure.
+   *
+   * @return resulting value on success, {@code null} otherwise
+   */
   public T getOrNull() {
     if (!success) {
       return null;
