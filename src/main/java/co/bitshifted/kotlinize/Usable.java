@@ -37,9 +37,11 @@ public class Usable<T extends AutoCloseable> {
    * @throws Exception if the block throws an exception
    * @param <R> type of the result produced by the block
    */
-  public <R> NullAware<R> use(Function<T, R> block) throws Exception {
+  public <R> NullAware<R> use(Function<T, R> block) throws RuntimeException {
     try (T res = resource) {
       return nullAware(() -> block.apply(res));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 

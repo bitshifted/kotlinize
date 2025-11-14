@@ -68,7 +68,7 @@ public class UsableTest {
                     r -> {
                       throw new RuntimeException("boom");
                     }));
-    assertEquals("boom", ex.getMessage());
+    assertEquals("boom", ex.getCause().getMessage());
 
     // resource must be closed even when the block throws
     assertTrue(res.isClosed());
