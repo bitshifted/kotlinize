@@ -30,12 +30,12 @@ implementation 'co.bitshifted:kotlinize:latest version'
 
 ## Code samples and documentation
 
-* [Null-safe calls](/docs/null-safe.md)
-* [Scope functions](/docs/scope-functions.md)
-* [Standard library functions](/docs/stdlib-functions.md)
-* `use` function
-* Delegates
-* Ranges
+* [Null-safe calls](./docs/null-safe.md)
+* [Scope functions](./docs/scope-functions.md)
+* [Standard library functions](./docs/stdlib-functions.md)
+* [`use` function](./docs/use-function.md)
+* [Delegates](./docs/delegates.md)
+* [Ranges](./docs/ranges.md)
 
 ## License
 - This project is distributed under the Mozilla Public License 2.0 (MPL-2.0). See the `LICENSE` file for full text.
