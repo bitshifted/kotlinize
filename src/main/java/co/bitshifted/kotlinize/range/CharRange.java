@@ -30,7 +30,7 @@ public final class CharRange extends Range<Character> {
       elements.add(current);
       current += step;
     }
-    while (decreasing && current >= endInclusive) {
+    while (decreasing && current > endInclusive) {
       elements.add(current);
       current -= step;
     }
