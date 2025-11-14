@@ -7,15 +7,20 @@
  */
 package co.bitshifted.kotlinize.range;
 
-/** A range of integers. */
+/**
+ * A range of {@code int} values. This class represents a sequence of integers from a start value to
+ * an end value (inclusive).
+ */
 public final class IntRange extends Range<Integer> {
 
   /**
-   * Creates a new IntRange.
+   * Creates a new {@code IntRange} with a specified step. The range includes all values from {@code
+   * start} to {@code endInclusive}. If {@code start} is greater than {@code endInclusive}, the
+   * range will be decreasing.
    *
-   * @param start start value
-   * @param endInclusive end value (inclusive)
-   * @param step step value
+   * @param start the starting value of the range
+   * @param endInclusive the ending value of the range (inclusive)
+   * @param step the step between each value in the range
    */
   public IntRange(int start, int endInclusive, int step) {
     super(start, endInclusive, step);
@@ -32,10 +37,12 @@ public final class IntRange extends Range<Integer> {
   }
 
   /**
-   * Creates a new IntRange with a default step of 1.
+   * Creates a new {@code IntRange} with a default step of 1. The range includes all values from
+   * {@code start} to {@code endInclusive}. If {@code start} is greater than {@code endInclusive},
+   * the range will be decreasing.
    *
-   * @param start start value
-   * @param endInclusive end value (inclusive)
+   * @param start the starting value of the range
+   * @param endInclusive the ending value of the range (inclusive)
    */
   public IntRange(int start, int endInclusive) {
     this(start, endInclusive, 1);

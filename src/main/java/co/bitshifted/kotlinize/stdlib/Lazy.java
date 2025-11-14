@@ -28,6 +28,7 @@ public final class Lazy<T> {
   private final Supplier<T> initializer;
   private final Object lock = new Object();
 
+  /** Creates a new {@code Lazy} instance. */
   public Lazy(Supplier<T> initializer) {
     if (initializer == null) {
       throw new NullPointerException("initializer must not be null");
@@ -58,6 +59,8 @@ public final class Lazy<T> {
   /**
    * Returns true if the value has already been initialized. This reads a volatile field so it is
    * thread-safe.
+   *
+   * @return {@code true} if object is initialized, {@code false} otherwise
    */
   public boolean isInitialized() {
     return initialized;

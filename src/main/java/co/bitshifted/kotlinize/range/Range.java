@@ -13,21 +13,28 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * A base class for ranges.
+ * A base class for ranges, representing a sequence of values. This class is sealed and permits
+ * specific implementations for different data types.
  *
  * @param <T> the type of the range elements
  */
 public sealed class Range<T> implements Iterable<T>
     permits ByteRange, ShortRange, IntRange, LongRange, CharRange {
 
+  /** The start value of the range. */
   protected final T start;
+
+  /** The end value of the range (inclusive). */
   protected final T end;
+
+  /** The step value for the range progression. */
   protected final T step;
 
+  /** The list of elements that make up the range. */
   protected final List<T> elements = new ArrayList<>();
 
   /**
-   * Creates a new Range. Subclasses should populate the elements list.
+   * Creates a new Range. Subclasses are responsible for populating the elements list.
    *
    * @param start start value
    * @param endInclusive end value (inclusive)
@@ -58,18 +65,18 @@ public sealed class Range<T> implements Iterable<T>
   }
 
   /**
-   * Gets the first value of the range.
+   * Gets the first element in the range.
    *
-   * @return the first value
+   * @return the first element
    */
   public T first() {
     return elements.get(0);
   }
 
   /**
-   * Gets the last value of the range.
+   * Gets the last element in the range.
    *
-   * @return the last value
+   * @return the last element
    */
   public T last() {
     return elements.get(elements.size() - 1);
@@ -78,8 +85,8 @@ public sealed class Range<T> implements Iterable<T>
   /**
    * Checks if any element in the range matches the given predicate.
    *
-   * @param predicate the predicate to test elements
-   * @return true if any element matches, false otherwise
+   * @param predicate the predicate to test elements against
+   * @return {@code true} if at least one element matches the predicate, {@code false} otherwise
    */
   public boolean any(Predicate<T> predicate) {
     for (T element : elements) {
@@ -93,8 +100,8 @@ public sealed class Range<T> implements Iterable<T>
   /**
    * Checks if all elements in the range match the given predicate.
    *
-   * @param predicate the predicate to test elements
-   * @return true if all elements match, false otherwise
+   * @param predicate the predicate to test elements against
+   * @return {@code true} if all elements match the predicate, {@code false} otherwise
    */
   public boolean all(Predicate<T> predicate) {
     for (T element : elements) {
@@ -106,9 +113,9 @@ public sealed class Range<T> implements Iterable<T>
   }
 
   /**
-   * Returns the elements of the range as an Iterable.
+   * Returns the elements of the range as an {@link Iterable}.
    *
-   * @return an Iterable of the range elements
+   * @return an {@link Iterable} of the range elements
    */
   public Iterable<T> asIterable() {
     return elements;
@@ -117,8 +124,8 @@ public sealed class Range<T> implements Iterable<T>
   /**
    * Checks if the range contains the specified value.
    *
-   * @param value the value to check
-   * @return true if the value is in the range, false otherwise
+   * @param value the value to check for
+   * @return {@code true} if the value is in the range, {@code false} otherwise
    */
   public boolean contains(T value) {
     return elements.contains(value);
@@ -127,16 +134,16 @@ public sealed class Range<T> implements Iterable<T>
   /**
    * Returns the count of elements in the range.
    *
-   * @return the number of elements in the range
+   * @return the number of elements
    */
   public int count() {
     return elements.size();
   }
 
   /**
-   * Returns a list of distinct elements in the range.
+   * Returns a list containing only the distinct elements in the range.
    *
-   * @return a List of distinct elements
+   * @return a {@link List} of distinct elements
    */
   public List<T> distinct() {
     return elements.stream().distinct().toList();
@@ -145,7 +152,7 @@ public sealed class Range<T> implements Iterable<T>
   /**
    * Returns an iterator over the elements in the range.
    *
-   * @return an Iterator of the range elements
+   * @return an {@link Iterator} for the range elements
    */
   @Override
   public Iterator<T> iterator() {
