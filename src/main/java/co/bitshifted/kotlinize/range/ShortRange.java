@@ -38,7 +38,7 @@ public final class ShortRange extends Range<Short> {
 
   /**
    * Creates a new {@code ShortRange} with a default step of 1. The range includes all values from
-   * {@code start} to {@tcode endInclusive}. If {@code start} is greater than {@code endInclusive},
+   * {@code start} to {@code endInclusive}. If {@code start} is greater than {@code endInclusive},
    * the range will be decreasing.
    *
    * @param start the starting value of the range

@@ -34,7 +34,6 @@ public class Usable<T extends AutoCloseable> {
    *
    * @param block function to execute with the AutoCloseable resource
    * @return a NullAware wrapping the result of the block execution
-   * @throws Exception if the block throws an exception
    * @param <R> type of the result produced by the block
    */
   public <R> NullAware<R> use(Function<T, R> block) throws RuntimeException {

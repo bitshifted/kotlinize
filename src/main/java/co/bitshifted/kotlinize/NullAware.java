@@ -36,6 +36,11 @@ public final class NullAware<T> {
     this.value = value;
   }
 
+  /**
+   * Gets the underlying value.
+   *
+   * @return value of this object
+   */
   public T value() {
     return value;
   }
