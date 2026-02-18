@@ -8,7 +8,8 @@
 package co.bitshifted.kotlinize;
 
 /**
- * Implementation of {@code Supplier} interface that accepts function blocks which  throw checked exception.
+ * Implementation of {@code Supplier} interface that accepts function blocks which throw checked
+ * exception.
  *
  * @param <T> return type of supplier
  */
