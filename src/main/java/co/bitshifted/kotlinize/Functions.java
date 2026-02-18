@@ -10,7 +10,6 @@ package co.bitshifted.kotlinize;
 import co.bitshifted.kotlinize.stdlib.Lazy;
 import co.bitshifted.kotlinize.stdlib.Result;
 import java.lang.reflect.Array;
-import java.util.function.Supplier;
 
 /**
  * A utility class that provides implementations of Kotlin standard library functions in Java.
@@ -230,7 +229,7 @@ public final class Functions {
    * @param <T> the type of the value
    * @return a Lazy instance that initializes the value when first accessed
    */
-  public static <T> Lazy<T> lazy(Supplier<T> initializer) {
+  public static <T> Lazy<T> lazy(ThrowableSupplier<T> initializer) {
     return new Lazy<>(initializer);
   }
 
@@ -309,7 +308,7 @@ public final class Functions {
    * @param <T> the type of the successful result
    * @return a Result containing either the successful result or the thrown exception
    */
-  public static <T> Result<T> runCatching(Supplier<T> block) {
+  public static <T> Result<T> runCatching(ThrowableSupplier<T> block) {
     try {
       return new Result<>(block.get());
     } catch (Throwable th) {

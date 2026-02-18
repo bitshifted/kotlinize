@@ -7,7 +7,7 @@
  */
 package co.bitshifted.kotlinize.stdlib;
 
-import java.util.function.Supplier;
+import co.bitshifted.kotlinize.ThrowableSupplier;
 
 /**
  * A simple thread-safe lazy holder. The initializer will be executed at most once (unless the
@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 public final class Lazy<T> {
   private volatile T value;
   private volatile boolean initialized = false;
-  private final Supplier<T> initializer;
+  private final ThrowableSupplier<T> initializer;
   private final Object lock = new Object();
 
   /**
@@ -33,7 +33,7 @@ public final class Lazy<T> {
    *
    * @param initializer supplier that provides value for initializer
    */
-  public Lazy(Supplier<T> initializer) {
+  public Lazy(ThrowableSupplier<T> initializer) {
     if (initializer == null) {
       throw new NullPointerException("initializer must not be null");
     }
@@ -50,7 +50,18 @@ public final class Lazy<T> {
     if (!initialized) {
       synchronized (lock) {
         if (!initialized) {
-          T computed = initializer.get();
+          T computed;
+          try {
+            computed = initializer.get();
+          } catch (Throwable e) {
+            if (e instanceof RuntimeException) {
+              throw (RuntimeException) e;
+            }
+            if (e instanceof Error) {
+              throw (Error) e;
+            }
+            throw new RuntimeException(e);
+          }
           value = computed;
           // Make write to value visible before setting initialized
           initialized = true;
