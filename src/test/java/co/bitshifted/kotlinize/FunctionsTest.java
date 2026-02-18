@@ -10,6 +10,9 @@ package co.bitshifted.kotlinize;
 import static co.bitshifted.kotlinize.Functions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +32,7 @@ public class FunctionsTest {
 
   @Test
   void shouldReturnValueOnSuccess() {
-    int result = runCatching(() -> increment(5)).getOrNull();
+    Integer result = runCatching(() -> increment(5)).getOrNull();
     assertEquals(6, result);
   }
 
@@ -37,6 +40,35 @@ public class FunctionsTest {
   void shouldReturnNullOnFailure() {
     Integer result = runCatching(() -> increment(-1)).getOrNull();
     assertNull(result);
+  }
+
+  @Test
+  void shouldReturnFailurCalculationeOnException() {
+    var result =
+        runCatching(() -> Files.size(Path.of("/non/existing/file")))
+            .fold(
+                s -> s,
+                (e) -> {
+                  System.out.println("Exception: " + e);
+                  return -1;
+                });
+    assertEquals(-1, result);
+  }
+
+  @Test
+  void shouldReturnCorrectValueOnSuccess() throws IOException {
+    var tmpFile = Files.createTempFile("kotlinize", "test");
+    var testContent = "This is test content.";
+    Files.writeString(tmpFile, testContent);
+    var result =
+        runCatching(() -> Files.size(tmpFile))
+            .fold(
+                s -> s,
+                (e) -> {
+                  System.out.println("Exception: " + e);
+                  return -1;
+                });
+    assertEquals(testContent.length(), result.longValue());
   }
 
   // New tests for arrayOfNulls and booleanArrayOf
@@ -71,8 +103,8 @@ public class FunctionsTest {
 
   @Test
   void boxedShortArrayOfCreatesShortArray() {
-    Short[] arr = boxedShortArrayOf(Short.valueOf((short) 1), null, Short.valueOf((short) 3));
-    assertArrayEquals(new Short[] {Short.valueOf((short) 1), null, Short.valueOf((short) 3)}, arr);
+    Short[] arr = boxedShortArrayOf((short) 1, null, (short) 3);
+    assertArrayEquals(new Short[] {(short) 1, null, (short) 3}, arr);
   }
 
   @Test
@@ -161,8 +193,8 @@ public class FunctionsTest {
   void requireNotNullDoesNotThrowWhenValueNonNull() {
     String v = requireNotNull("hello");
     assertEquals("hello", v);
-    Integer i = requireNotNull(Integer.valueOf(5), "msg");
-    assertEquals(Integer.valueOf(5), i);
+    Integer i = requireNotNull(5, "msg");
+    assertEquals(5, i);
   }
 
   @Test
@@ -181,7 +213,7 @@ public class FunctionsTest {
 
   @Test
   void todoThrowsUnsupportedOperationException() {
-    var ex = assertThrows(UnsupportedOperationException.class, () -> TODO());
+    var ex = assertThrows(UnsupportedOperationException.class, Functions::TODO);
     assertEquals("Not implemented yet", ex.getMessage());
   }
 
